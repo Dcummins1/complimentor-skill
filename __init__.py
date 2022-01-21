@@ -1,5 +1,5 @@
 from mycroft import MycroftSkill, intent_file_handler
-
+import requests
 
 class Complimentor(MycroftSkill):
     def __init__(self):
@@ -7,7 +7,9 @@ class Complimentor(MycroftSkill):
 
     @intent_file_handler('complimentor.intent')
     def handle_complimentor(self, message):
-        self.speak_dialog('complimentor')
+        response = requests.get("https://complimentr.com/api")
+        compliment = response.json()["compliment"]
+        self.speak_dialog(compliment)
 
 
 def create_skill():
